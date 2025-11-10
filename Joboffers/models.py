@@ -1,5 +1,5 @@
 from django.db import models
-from account.models import PersonalInformation
+from Account.models import PersonalInformation
 
 
 class JobPosition(models.Model):
