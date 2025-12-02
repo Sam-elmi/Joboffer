@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>لیست کاربران</title>
+</head>
+<body>
+    <h1>لیست کاربران (PersonalInformation)</h1>
+
+    {% if users %}
+        <table border="1" cellpadding="8">
+            <thead>
+                <tr>
+                    <th>ایمیل</th>
+                    <th>نقش (Role)</th>
+                    <th>سطح ثبت‌نام</th>
+                    <th>نوع کاربر</th>
+                    <th>جزییات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                    <tr>
+                        <td>{{ u.email }}</td>
+                        <td>{{ u.role }}</td>
+                        <td>{{ u.register_level|default:"-" }}</td>
+                        <td>
+                            {% if u.role.name == "employee" %}
+                                کارمند ({{ u.first_name }} {{ u.last_name }})
+                            {% elif u.role.name == "manager" %}
+                                مدیر شرکت {{ u.company_name }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'account:user_detail' u.pk %}">مشاهده جزییات</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>هنوز هیچ کاربری ثبت نشده است.</p>
+    {% endif %}
+
+    <p>
+        <a href="{% url 'account:home' %}">بازگشت به صفحه‌ی Account</a>
+    </p>
+</body>
+</html>

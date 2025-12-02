@@ -2,6 +2,7 @@ from django.views.generic import TemplateView, ListView, DetailView
 from .models import PersonalInformation
 from django.shortcuts import get_object_or_404
 
+
 class AccountHomeView(TemplateView):
     template_name = 'account/home.html'
 
