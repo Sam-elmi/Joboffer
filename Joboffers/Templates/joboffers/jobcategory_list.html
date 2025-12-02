@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>لیست دسته‌بندی‌های شغلی</title>
+</head>
+<body>
+    <h1>لیست دسته‌بندی‌های شغلی (JobCategory)</h1>
+
+    {% if categories %}
+        <ul>
+            {% for cat in categories %}
+                <li>{{ cat.name }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>هیچ دسته‌بندی شغلی ثبت نشده است.</p>
+    {% endif %}
+
+    <p>
+        <a href="{% url 'joboffers:offer_list' %}">بازگشت به لیست آگهی‌ها</a>
+    </p>
+</body>
+</html>

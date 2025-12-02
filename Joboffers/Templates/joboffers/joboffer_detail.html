@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>جزییات آگهی</title>
+</head>
+<body>
+    <h1>جزییات آگهی شغلی</h1>
+
+    <h2>{{ offer.job_position.name }}</h2>
+
+    <p><strong>شرکت:</strong>
+        {% if offer.manager.company_name %}
+            {{ offer.manager.company_name }}
+        {% else %}
+            (شرکت نامشخص)
+        {% endif %}
+    </p>
+
+    <p><strong>دسته‌بندی:</strong> {{ offer.job_category.name|default:"-" }}</p>
+    <p><strong>نوع همکاری:</strong> {{ offer.get_cooperation_type_display }}</p>
+
+    <p><strong>روزهای کاری:</strong> {{ offer.work_day|default:"-" }}</p>
+    <p><strong>ساعت کاری:</strong> {{ offer.work_time|default:"-" }}</p>
+
+    <p><strong>شرایط سنی:</strong>
+        {% if offer.age_limit %}
+            حداکثر {{ offer.age_limit }} سال
+        {% else %}
+            مشخص نشده
+        {% endif %}
+    </p>
+
+    <p><strong>جنسیت:</strong> {{ offer.gender|default:"فرقی نمی‌کند" }}</p>
+
+    <p><strong>وضعیت آگهی:</strong> {{ offer.get_status_display }}</p>
+
+    <hr>
+
+    <h3>شاخص‌های کاری / مهارت‌ها</h3>
+    <p>{{ offer.work_indicators|linebreaks }}</p>
+
+    <h3>توضیحات آگهی</h3>
+    <p>{{ offer.job_explanation|linebreaks }}</p>
+
+    <hr>
+
+    <p>
+        <a href="{% url 'joboffers:offer_list' %}">بازگشت به لیست آگهی‌ها</a>
+    </p>
+</body>
+</html>

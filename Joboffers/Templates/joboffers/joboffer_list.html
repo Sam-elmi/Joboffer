@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>لیست آگهی‌های شغلی</title>
+</head>
+<body>
+    <h1>لیست آگهی‌های شغلی</h1>
+
+    {% if offers %}
+        <table border="1" cellpadding="8">
+            <thead>
+                <tr>
+                    <th>عنوان شغل</th>
+                    <th>شرکت</th>
+                    <th>دسته‌بندی</th>
+                    <th>نوع همکاری</th>
+                    <th>تاریخ ایجاد</th>
+                    <th>جزییات</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for offer in offers %}
+                    <tr>
+                        <td>{{ offer.job_position.name }}</td>
+                        <td>
+                            {% if offer.manager.company_name %}
+                                {{ offer.manager.company_name }}
+                            {% else %}
+                                (شرکت نامشخص)
+                            {% endif %}
+                        </td>
+                        <td>{{ offer.job_category.name|default:"-" }}</td>
+                        <td>{{ offer.get_cooperation_type_display }}</td>
+                        <td>{{ offer.created_at|date:"Y-m-d" }}</td>
+                        <td>
+                            <a href="{% url 'joboffers:offer_detail' offer.pk %}">مشاهده</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>هیچ آگهی فعالی ثبت نشده است.</p>
+    {% endif %}
+
+    <hr>
+
+    <p>
+        <a href="{% url 'joboffers:position_list' %}">مشاهده لیست عنوان‌های شغلی</a> |
+        <a href="{% url 'joboffers:category_list' %}">مشاهده لیست دسته‌بندی‌ها</a>
+    </p>
+</body>
+</html>
