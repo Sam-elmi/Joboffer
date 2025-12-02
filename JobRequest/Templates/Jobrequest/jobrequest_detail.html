@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>جزییات درخواست شغلی</title>
+</head>
+<body>
+    <h1>جزییات درخواست شغلی</h1>
+
+    <h2>اطلاعات متقاضی</h2>
+    <p><strong>نام:</strong> {{ request_obj.employee_first_name }} {{ request_obj.employee_last_name }}</p>
+    <p><strong>ایمیل:</strong> {{ request_obj.employee.email }}</p>
+
+    <hr>
+
+    <h2>اطلاعات شغل</h2>
+    <p><strong>پوزیشن:</strong>
+        {% if request_obj.job_position %}
+            {{ request_obj.job_position.name }}
+        {% else %}
+            {{ request_obj.job_offer.job_position.name }}
+        {% endif %}
+    </p>
+    <p><strong>شرکت:</strong> {{ request_obj.company_name }}</p>
+    <p><strong>آگهی مرتبط:</strong> {{ request_obj.job_offer }}</p>
+
+    <hr>
+
+    <h2>وضعیت درخواست</h2>
+    <p><strong>حقوق درخواستی:</strong> {{ request_obj.requested_salary }}</p>
+    <p><strong>وضعیت:</strong> {{ request_obj.get_status_display }}</p>
+    <p><strong>بررسی شده / نشده:</strong> {{ request_obj.get_request_check_display }}</p>
+    <p><strong>تاریخ ثبت:</strong> {{ request_obj.created_at|date:"Y-m-d H:i" }}</p>
+
+    <hr>
+
+    <p>
+        <a href="{% url 'jobrequest:request_list' %}">بازگشت به لیست درخواست‌ها</a>
+    </p>
+</body>
+</html>
