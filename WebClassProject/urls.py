@@ -22,6 +22,6 @@ urlpatterns = [
     path('account/', include(('Account.urls', 'Account'), namespace='account')),
     path('jobs/', include(('joboffers.urls', 'joboffers'), namespace='joboffers')),
     #path('requests/', include(('JobRequest.urls', 'JobRequest'), namespace='jobrequest')),
-    #path('resume/', include(('Resume.urls', 'Resume'), namespace='resume')),
+    path('resume/', include(('Resume.urls', 'Resume'), namespace='resume')),
     #path('panel/', include(('Userpanel.urls', 'Userpanel'), namespace='userpanel')),
 ]

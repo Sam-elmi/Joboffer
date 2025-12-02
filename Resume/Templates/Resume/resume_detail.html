@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>رزومه {{ employee.first_name }} {{ employee.last_name }}</title>
+</head>
+<body>
+    <h1>رزومه {{ employee.first_name }} {{ employee.last_name }}</h1>
+    <p><strong>ایمیل:</strong> {{ employee.email }}</p>
+    <p><strong>شماره تماس:</strong> {{ employee.phone_number }}</p>
+
+    <hr>
+
+    <h2>۱. فایل رزومه آپلود شده</h2>
+    {% if uploaded_resume and uploaded_resume.is_uploaded and uploaded_resume.file %}
+        <p>فایل رزومه: <a href="{{ uploaded_resume.file.url }}">دانلود / مشاهده</a></p>
+    {% else %}
+        <p>فایل رزومه‌ای آپلود نشده است.</p>
+    {% endif %}
+
+    <hr>
+
+    <h2>۲. اطلاعات پایه (Basic Information)</h2>
+    {% if basic_info %}
+        <p><strong>جنسیت:</strong> {{ basic_info.get_gender_display }}</p>
+        <p><strong>وضعیت تأهل:</strong> {{ basic_info.get_marital_status_display }}</p>
+        <p><strong>شهر محل زندگی:</strong> {{ basic_info.living_city }}</p>
+        <p><strong>تاریخ تولد:</strong> {{ basic_info.birth_day }}</p>
+        <p><strong>حقوق مورد انتظار:</strong> {{ basic_info.expected_salary|default:"مشخص نشده" }}</p>
+        <p><strong>شغل مورد علاقه:</strong> {{ basic_info.preferred_job|default:"مشخص نشده" }}</p>
+    {% else %}
+        <p>اطلاعات پایه ثبت نشده است.</p>
+    {% endif %}
+
+    <hr>
+
+    <h2>۳. سوابق تحصیلی (Study History)</h2>
+    {% if study_history_list %}
+        <ul>
+            {% for s in study_history_list %}
+                <li>
+                    <strong>{{ s.university_name }}</strong> -
+                    {{ s.grade_of_study }} |
+                    از {{ s.start_date }} تا
+                    {% if s.end_date %}
+                        {{ s.end_date }}
+                    {% else %}
+                        اکنون
+                    {% endif %}
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>سابقه تحصیلی ثبت نشده است.</p>
+    {% endif %}
+
+    <hr>
+
+    <h2>۴. سوابق کاری (Work History)</h2>
+    {% if work_history_list %}
+        <ul>
+            {% for w in work_history_list %}
+                <li>
+                    <strong>{{ w.work_position }}</strong> در {{ w.company_name }} (مدت: {{ w.duration }})
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>سابقه کاری ثبت نشده است.</p>
+    {% endif %}
+
+    <hr>
+
+    <h2>۵. مهارت‌های زبان (Languages)</h2>
+    {% if language_list %}
+        <ul>
+            {% for lang in language_list %}
+                <li>{{ lang.language_name }} - {{ lang.level }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>مهارت زبان ثبت نشده است.</p>
+    {% endif %}
+
+    <hr>
+
+    <h2>۶. مهارت‌های نرم‌افزاری (Software Skills)</h2>
+    {% if software_skill_list %}
+        <ul>
+            {% for s in software_skill_list %}
+                <li>{{ s.software_name }} - {{ s.level }}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>مهارت نرم‌افزاری ثبت نشده است.</p>
+    {% endif %}
+
+    <hr>
+
+    <p>
+        <a href="{% url 'resume:resume_list' %}">بازگشت به لیست رزومه‌ها</a>
+    </p>
+</body>
+</html>

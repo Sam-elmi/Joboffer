@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>لیست رزومه‌ها</title>
+</head>
+<body>
+    <h1>لیست کارمندان (Employee) و رزومه‌ها</h1>
+
+    {% if employees %}
+        <table border="1" cellpadding="8">
+            <thead>
+                <tr>
+                    <th>نام</th>
+                    <th>ایمیل</th>
+                    <th>شهر محل زندگی (اگر ثبت شده)</th>
+                    <th>رزومه</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for emp in employees %}
+                    <tr>
+                        <td>
+                            {{ emp.first_name|default:"" }} {{ emp.last_name|default:"" }}
+                        </td>
+                        <td>{{ emp.email }}</td>
+                        <td>
+                            {% if emp.basic_info %}
+                                {{ emp.basic_info.living_city }}
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{% url 'resume:resume_detail' emp.pk %}">مشاهده رزومه</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>هیچ کارمندی با نقش employee ثبت نشده است.</p>
+    {% endif %}
+
+    <p>
+        <a href="{% url 'resume:home' %}">بازگشت به صفحه اصلی رزومه</a>
+    </p>
+</body>
+</html>
