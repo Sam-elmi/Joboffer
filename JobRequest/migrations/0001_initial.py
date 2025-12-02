@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('Account', '0001_initial'),
-        ('Joboffers', '0001_initial'),
+        ('joboffers', '0001_initial'),
     ]
 
     operations = [
@@ -26,8 +26,8 @@ class Migration(migrations.Migration):
                 ('request_check', models.CharField(choices=[('checked', 'Checked'), ('not_checked', 'Not Checked')], default='not_checked', max_length=20)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('employee', models.ForeignKey(limit_choices_to={'role__name': 'employee'}, on_delete=django.db.models.deletion.CASCADE, related_name='job_requests', to='Account.personalinformation')),
-                ('job_offer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='requests', to='Joboffers.joboffer')),
-                ('job_position', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='Joboffers.jobposition')),
+                ('job_offer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='requests', to='joboffers.joboffer')),
+                ('job_position', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='joboffers.jobposition')),
             ],
         ),
     ]

@@ -41,9 +41,9 @@ class Migration(migrations.Migration):
                 ('status', models.CharField(choices=[('available', 'Available'), ('expired', 'Expired')], default='available', max_length=20)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('job_category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='Joboffers.jobcategory')),
+                ('job_category', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='joboffers.jobcategory')),
                 ('manager', models.ForeignKey(limit_choices_to={'role__name': 'manager'}, on_delete=django.db.models.deletion.CASCADE, related_name='job_offers', to='Account.personalinformation')),
-                ('job_position', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='Joboffers.jobposition')),
+                ('job_position', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='joboffers.jobposition')),
             ],
         ),
     ]

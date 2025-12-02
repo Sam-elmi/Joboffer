@@ -1,6 +1,6 @@
 from django.db import models
 from Account.models import PersonalInformation
-from Joboffers.models import JobOffer
+from joboffers.models import JobOffer
 from JobRequest.models import JobRequest
 
 
