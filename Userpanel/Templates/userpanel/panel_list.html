@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>لیست پنل‌های کاربری</title>
+</head>
+<body>
+    <h1>لیست پنل‌های کاربری</h1>
+
+    {% if panels %}
+        <table border="1" cellpadding="8">
+            <thead>
+                <tr>
+                    <th>ایمیل کاربر</th>
+                    <th>نقش</th>
+                    <th>نام شرکت (اگر مدیر)</th>
+                    <th>مشاهده پنل</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in panels %}
+                    <tr>
+                        <td>{{ p.user.email }}</td>
+                        <td>{{ p.user.role }}</td>
+                        <td>{{ p.user.company_name|default:"-" }}</td>
+                        <td>
+                            <a href="{% url 'userpanel:panel_detail' p.pk %}">ورود به پنل</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>هیچ پنل کاربری ثبت نشده است.</p>
+    {% endif %}
+
+    <p>
+        <a href="{% url 'userpanel:home' %}">بازگشت به صفحه اصلی پنل</a>
+    </p>
+</body>
+</html>
