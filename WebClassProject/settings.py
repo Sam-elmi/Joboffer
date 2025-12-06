@@ -26,7 +26,8 @@ SECRET_KEY = 'django-insecure-h-9i-yfu4*v#t0#*zal!h741k&+&^6uto32)gu!fjdhqh51*63
 DEBUG = True
 
 ALLOWED_HOSTS = []
-
+# settings.py
+AUTH_USER_MODEL = 'Account.CustomUser'
 
 # Application definition
 
@@ -41,7 +42,6 @@ INSTALLED_APPS = [
     'joboffers',
     'JobRequest',
     'Resume',
-    'Userpanel',
 ]
 
 MIDDLEWARE = [
