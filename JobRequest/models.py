@@ -1,7 +1,7 @@
 from django.db import models
-from Account.models import PersonalInformation
+from Account.models import CustomUser
 from joboffers.models import JobOffer, JobPosition
-
+from django.conf import settings
 
 class JobRequest(models.Model):
     STATUS_CHOICES = [
@@ -17,7 +17,7 @@ class JobRequest(models.Model):
 
     # Relations
     employee = models.ForeignKey(
-        PersonalInformation,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='job_requests',
         limit_choices_to={'role__name': 'employee'}

@@ -3,12 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <title>بخش درخواست‌های شغلی</title>
+    <style>
+        body {
+            font-family: Tahoma, sans-serif;
+            direction: rtl;
+            background-color: #f4f6f8;
+            padding: 20px;
+        }
+        h1 {
+            color: #001f3f;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            background-color: #f1c40f;
+            color: #001f3f;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #d4ac0d;
+        }
+    </style>
 </head>
 <body>
     <h1>بخش JobRequest</h1>
 
     <p>
-        <a href="{% url 'jobrequest:request_list' %}">مشاهده لیست تمام درخواست‌های شغلی</a>
+        <a href="{% url 'jobrequest:request_list' %}" class="btn">مشاهده لیست تمام درخواست‌های شغلی</a>
+    </p>
+
+    <p>
+        <a href="{% url 'jobrequest:create_request' %}" class="btn">ثبت درخواست جدید</a>
+
     </p>
 </body>
 </html>

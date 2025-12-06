@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>افزودن دسته‌بندی</title>
+<style>
+    body { font-family: Tahoma; direction: rtl; background-color: #f4f6f8; padding: 20px; }
+    h1 { color: #001f3f; }
+    input[type=text] { width: 100%; padding: 10px; margin-top: 6px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 5px; }
+    button { padding: 10px 20px; background-color: #f1c40f; color: #001f3f; border: none; border-radius: 5px; cursor: pointer; }
+    button:hover { background-color: #d4ac0d; }
+</style>
+</head>
+<body>
+<h1>افزودن دسته‌بندی جدید</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.name.label_tag }}<br>
+    {{ form.name }}<br>
+    <button type="submit">ذخیره</button>
+</form>
+
+<a href="{% url 'joboffers:category_list' %}">بازگشت به لیست دسته‌بندی‌ها</a>
+</body>
+</html>

@@ -1,54 +1,150 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <title>لیست آگهی‌های شغلی</title>
+<meta charset="UTF-8">
+<title>لیست آگهی‌ها</title>
+<style>
+    body {
+        font-family: Tahoma, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+        direction: rtl;
+    }
+
+    header {
+        background-color: #001f3f; /* آبی کاربنی */
+        color: #f1c40f; /* زرد */
+        padding: 20px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 1200px;
+        margin: 30px auto;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        background-color: #f1c40f; /* زرد */
+        color: #001f3f; /* آبی کاربنی */
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: bold;
+        margin-bottom: 20px;
+        transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+        background-color: #d4ac0d;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    table th, table td {
+        border: 1px solid #ddd;
+        padding: 12px 15px;
+        text-align: center;
+    }
+
+    table th {
+        background-color: #001f3f; /* آبی کاربنی */
+        color: #f1c40f; /* زرد */
+    }
+
+    table tr:nth-child(even) {
+        background-color: #f9f9f9;
+    }
+
+    table tr:hover {
+        background-color: #f1f1f1;
+    }
+
+    .empty-message {
+        text-align: center;
+        font-size: 18px;
+        color: #555;
+        margin-top: 30px;
+    }
+
+    .view-btn {
+        padding: 6px 12px;
+        background-color: #001f3f;
+        color: #f1c40f;
+        text-decoration: none;
+        border-radius: 4px;
+        font-weight: bold;
+        transition: background-color 0.3s;
+    }
+
+    .view-btn:hover {
+        background-color: #003060;
+    }
+
+    .links {
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .links a {
+        margin: 0 10px;
+        text-decoration: none;
+        color: #001f3f;
+        font-weight: bold;
+    }
+
+    .links a:hover {
+        color: #f1c40f;
+    }
+</style>
 </head>
 <body>
-    <h1>لیست آگهی‌های شغلی</h1>
+
+<header>لیست آگهی‌های شغلی</header>
+
+<div class="container">
+    <a href="{% url 'joboffers:offer_add' %}" class="btn">ثبت آگهی جدید</a>
 
     {% if offers %}
-        <table border="1" cellpadding="8">
-            <thead>
-                <tr>
-                    <th>عنوان شغل</th>
-                    <th>شرکت</th>
-                    <th>دسته‌بندی</th>
-                    <th>نوع همکاری</th>
-                    <th>تاریخ ایجاد</th>
-                    <th>جزییات</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for offer in offers %}
-                    <tr>
-                        <td>{{ offer.job_position.name }}</td>
-                        <td>
-                            {% if offer.manager.company_name %}
-                                {{ offer.manager.company_name }}
-                            {% else %}
-                                (شرکت نامشخص)
-                            {% endif %}
-                        </td>
-                        <td>{{ offer.job_category.name|default:"-" }}</td>
-                        <td>{{ offer.get_cooperation_type_display }}</td>
-                        <td>{{ offer.created_at|date:"Y-m-d" }}</td>
-                        <td>
-                            <a href="{% url 'joboffers:offer_detail' offer.pk %}">مشاهده</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <table>
+        <thead>
+            <tr>
+                <th>عنوان شغل</th>
+                <th>شرکت</th>
+                <th>دسته‌بندی</th>
+                <th>مشاهده</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for offer in offers %}
+            <tr>
+                <td>{{ offer.job_position.name }}</td>
+                <<td>{{ offer.company_name|default:"(نامشخص)" }}</td>
+
+                <td>{{ offer.job_category.name|default:"-" }}</td>
+                <td><a href="{% url 'joboffers:offer_detail' offer.pk %}" class="view-btn">مشاهده</a></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
     {% else %}
-        <p>هیچ آگهی فعالی ثبت نشده است.</p>
+        <p class="empty-message">هیچ آگهی ثبت نشده است.</p>
     {% endif %}
 
-    <hr>
+    <div class="links">
 
-    <p>
-        <a href="{% url 'joboffers:position_list' %}">مشاهده لیست عنوان‌های شغلی</a> |
         <a href="{% url 'joboffers:category_list' %}">مشاهده لیست دسته‌بندی‌ها</a>
-    </p>
+    </div>
+</div>
+
 </body>
 </html>

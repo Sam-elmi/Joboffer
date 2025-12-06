@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ form.instance.pk|yesno:"ویرایش درخواست,ثبت درخواست جدید" }}</title>
+    <style>
+        body {
+            font-family: Tahoma, sans-serif;
+            direction: rtl;
+            background-color: #f4f6f8;
+            padding: 20px;
+        }
+        h1 {
+            color: #001f3f;
+            text-align: center;
+        }
+        .container {
+            max-width: 700px;
+            margin: 30px auto;
+            background-color: #fff;
+            padding: 25px 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .field {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            color: #001f3f;
+            margin-bottom: 5px;
+        }
+        input[type=text], input[type=number], select, textarea {
+            width: 100%;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            font-size: 15px;
+            box-sizing: border-box;
+        }
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .btn-submit {
+            display: inline-block;
+            width: 100%;
+            background-color: #f1c40f;
+            color: #001f3f;
+            border: none;
+            border-radius: 6px;
+            padding: 12px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+        .btn-submit:hover {
+            background-color: #d4ac0d;
+        }
+        .back-link, .new-request-btn {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #001f3f;
+            font-weight: bold;
+            padding: 8px 12px;
+            border-radius: 6px;
+            border: 1px solid #001f3f;
+            transition: all 0.3s;
+        }
+        .back-link:hover, .new-request-btn:hover {
+            background-color: #f1c40f;
+            color: #001f3f;
+            border-color: #f1c40f;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<h1>{{ form.instance.pk|yesno:"ویرایش درخواست,ثبت درخواست جدید" }}</h1>
+
+<div class="container">
+  <form method="post" action="{% url 'jobrequest:create_request' %}">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="field">
+        {{ field.label_tag }}
+        {{ field }}
+        {% if field.errors %}
+            <div class="error">{{ field.errors }}</div>
+        {% endif %}
+    </div>
+    {% endfor %}
+
+    <button type="submit" class="btn-submit">ذخیره درخواست</button>
+</form>
+
+
+    <a href="{% url 'jobrequest:request_list' %}" class="back-link">بازگشت به لیست درخواست‌ها</a>
+</div>
+
+</body>
+</html>

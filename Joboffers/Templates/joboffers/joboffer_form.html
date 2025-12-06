@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>{{ form.instance.pk|yesno:"ویرایش آگهی,ایجاد آگهی جدید" }}</title>
+<style>
+    body {
+        font-family: Tahoma, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+        direction: rtl;
+    }
+    header {
+        background-color: #001f3f;
+        color: #f1c40f;
+        padding: 20px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+    .container {
+        width: 90%;
+        max-width: 700px;
+        margin: 30px auto;
+        background-color: #fff;
+        padding: 25px 30px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+    form .field {
+        margin-bottom: 15px;
+    }
+    form label {
+        display: block;
+        font-weight: bold;
+        color: #001f3f;
+        margin-bottom: 5px;
+    }
+    form input[type=text],
+    form input[type=number],
+    form select,
+    form textarea {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 15px;
+        box-sizing: border-box;
+    }
+    form textarea {
+        resize: vertical;
+        min-height: 100px;
+    }
+    .btn-submit {
+        display: inline-block;
+        width: 100%;
+        background-color: #f1c40f;
+        color: #001f3f;
+        border: none;
+        border-radius: 6px;
+        padding: 12px;
+        font-weight: bold;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 20px;
+    }
+    .btn-submit:hover {
+        background-color: #d4ac0d;
+    }
+    .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+        color: #001f3f;
+        font-weight: bold;
+        padding: 10px 15px;
+        border-radius: 6px;
+        border: 1px solid #001f3f;
+        transition: all 0.3s;
+    }
+    .back-link:hover {
+        background-color: #f1c40f;
+        color: #001f3f;
+        border-color: #f1c40f;
+    }
+    .error {
+        color: red;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+</style>
+</head>
+<body>
+
+<header>{{ form.instance.pk|yesno:"ویرایش آگهی,ایجاد آگهی جدید" }}</header>
+
+<div class="container">
+    <form method="post">
+        {% csrf_token %}
+
+        <!-- فیلد نام شرکت -->
+        <div class="field">
+            {{ form.company_name.label_tag }}
+            {{ form.company_name }}
+            {% if form.company_name.errors %}
+                <div class="error">{{ form.company_name.errors }}</div>
+            {% endif %}
+        </div>
+
+        <!-- سایر فیلدهای فرم -->
+        {% for field in form %}
+            {% if field.name != 'company_name' %}
+            <div class="field">
+                {{ field.label_tag }}
+                {{ field }}
+                {% if field.errors %}
+                    <div class="error">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+            {% endif %}
+        {% endfor %}
+
+        <button type="submit" class="btn-submit">ذخیره آگهی</button>
+    </form>
+
+    <a href="{% url 'joboffers:offer_list' %}" class="back-link">بازگشت به لیست آگهی‌ها</a>
+</div>
+
+</body>
+</html>

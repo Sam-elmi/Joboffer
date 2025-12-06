@@ -1,24 +1,36 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <title>لیست دسته‌بندی‌های شغلی</title>
+<meta charset="UTF-8">
+<title>لیست دسته‌بندی‌ها</title>
+<style>
+    body { font-family: Tahoma; direction: rtl; background-color: #f4f6f8; padding: 20px; }
+    h1 { color: #001f3f; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
+    th { background-color: #001f3f; color: #f1c40f; }
+    a.btn { padding: 5px 12px; background-color: #f1c40f; color: #001f3f; text-decoration: none; border-radius: 5px; }
+</style>
 </head>
 <body>
-    <h1>لیست دسته‌بندی‌های شغلی (JobCategory)</h1>
+<h1>لیست دسته‌بندی‌ها</h1>
+<a href="{% url 'joboffers:category_add' %}" class="btn">افزودن دسته‌بندی جدید</a>
 
-    {% if categories %}
-        <ul>
-            {% for cat in categories %}
-                <li>{{ cat.name }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>هیچ دسته‌بندی شغلی ثبت نشده است.</p>
-    {% endif %}
+{% if categories %}
+<table>
+    <tr>
+        <th>نام دسته‌بندی</th>
+    </tr>
+    {% for cat in categories %}
+    <tr>
+        <td>{{ cat.name }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>هیچ دسته‌بندی ثبت نشده است.</p>
+{% endif %}
 
-    <p>
-        <a href="{% url 'joboffers:offer_list' %}">بازگشت به لیست آگهی‌ها</a>
-    </p>
+<a href="{% url 'joboffers:offer_list' %}">بازگشت به لیست آگهی‌ها</a>
 </body>
 </html>

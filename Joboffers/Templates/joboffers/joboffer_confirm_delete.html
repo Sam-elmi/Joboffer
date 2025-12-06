@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="fa">
+<head>
+<meta charset="UTF-8">
+<title>تایید حذف آگهی</title>
+</head>
+<body>
+<h1>حذف آگهی</h1>
+<p>آیا مطمئن هستید می‌خواهید این آگهی را حذف کنید؟</p>
+<p><strong>{{ object.job_position.name }}</strong></p>
+
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">بله، حذف کن</button>
+    <a href="{% url 'joboffers:offer_detail' object.pk %}">انصراف</a>
+</form>
+</body>
+</html>

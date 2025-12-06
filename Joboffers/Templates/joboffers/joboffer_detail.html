@@ -1,52 +1,173 @@
 <!DOCTYPE html>
 <html lang="fa">
 <head>
-    <meta charset="UTF-8">
-    <title>جزییات آگهی</title>
+<meta charset="UTF-8">
+<title>جزئیات آگهی</title>
+<style>
+    body {
+        font-family: Tahoma, sans-serif;
+        background-color: #f4f6f8;
+        margin: 0;
+        padding: 0;
+        direction: rtl;
+    }
+
+    header {
+        background-color: #001f3f; /* آبی کاربنی */
+        color: #f1c40f; /* زرد */
+        padding: 20px;
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .container {
+        width: 90%;
+        max-width: 700px;
+        margin: 30px auto;
+        background-color: #fff;
+        padding: 25px 30px;
+        border-radius: 12px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    .field {
+        margin-bottom: 15px;
+    }
+
+    .field label {
+        font-weight: bold;
+        color: #001f3f;
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    .field span {
+        color: #333;
+        font-size: 15px;
+    }
+
+    .back-link, .edit-btn, .delete-btn {
+        display: inline-block;
+        margin-top: 20px;
+        text-decoration: none;
+        font-weight: bold;
+        padding: 10px 15px;
+        border-radius: 6px;
+        transition: all 0.3s;
+    }
+
+    .back-link {
+        color: #001f3f;
+        border: 1px solid #001f3f;
+    }
+
+    .back-link:hover {
+        background-color: #f1c40f;
+        color: #001f3f;
+        border-color: #f1c40f;
+    }
+
+    .edit-btn {
+        background-color: #2c9bd8;
+        color: white;
+        margin-right: 10px;
+    }
+
+    .edit-btn:hover {
+        background-color: #1b7fb5;
+    }
+
+    .delete-btn {
+        background-color: #e74c3c;
+        color: white;
+        border: none;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    .delete-btn:hover {
+        background-color: #c0392b;
+    }
+
+    .actions {
+        margin-top: 25px;
+    }
+</style>
 </head>
 <body>
-    <h1>جزییات آگهی شغلی</h1>
 
-    <h2>{{ offer.job_position.name }}</h2>
+<header>{{ offer.job_position.name }}</header>
 
-    <p><strong>شرکت:</strong>
-        {% if offer.manager.company_name %}
-            {{ offer.manager.company_name }}
-        {% else %}
-            (شرکت نامشخص)
+<div class="container">
+
+    <div class="field">
+        <label>شرکت:</label>
+        <span>{{ offer.manager.company_name|default:"نامشخص" }}</span>
+    </div>
+
+    <div class="field">
+        <label>دسته‌بندی:</label>
+        <span>{{ offer.job_category.name|default:"-" }}</span>
+    </div>
+
+    <div class="field">
+        <label>نوع همکاری:</label>
+        <span>{{ offer.get_cooperation_type_display }}</span>
+    </div>
+
+    <div class="field">
+        <label>روز کاری:</label>
+        <span>{{ offer.work_day }}</span>
+    </div>
+
+    <div class="field">
+        <label>ساعت کاری:</label>
+        <span>{{ offer.work_time }}</span>
+    </div>
+
+    <div class="field">
+        <label>مهارت‌ها:</label>
+        <span>{{ offer.work_indicators }}</span>
+    </div>
+
+    <div class="field">
+        <label>توضیحات:</label>
+        <span>{{ offer.job_explanation }}</span>
+    </div>
+
+    <div class="field">
+        <label>جنسیت:</label>
+        <span>{{ offer.gender|default:"-" }}</span>
+    </div>
+
+    <div class="field">
+        <label>سن:</label>
+        <span>{{ offer.age_limit|default:"-" }}</span>
+    </div>
+
+    <div class="field">
+        <label>وضعیت:</label>
+        <span>{{ offer.get_status_display }}</span>
+    </div>
+
+    <div class="actions">
+        <a href="{% url 'joboffers:offer_list' %}" class="back-link">بازگشت به لیست آگهی‌ها</a>
+
+        {% if user.is_authenticated and user == offer.manager %}
+            <a href="{% url 'joboffers:offer_edit' offer.pk %}" class="btn btn-warning">ویرایش</a>
+
+
+            <form action="{% url 'joboffers:offer_delete' offer.pk %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit" class="delete-btn" onclick="return confirm('آیا مطمئن هستید که می‌خواهید این آگهی را حذف کنید؟')">
+                    حذف
+                </button>
+            </form>
         {% endif %}
-    </p>
+    </div>
 
-    <p><strong>دسته‌بندی:</strong> {{ offer.job_category.name|default:"-" }}</p>
-    <p><strong>نوع همکاری:</strong> {{ offer.get_cooperation_type_display }}</p>
+</div>
 
-    <p><strong>روزهای کاری:</strong> {{ offer.work_day|default:"-" }}</p>
-    <p><strong>ساعت کاری:</strong> {{ offer.work_time|default:"-" }}</p>
-
-    <p><strong>شرایط سنی:</strong>
-        {% if offer.age_limit %}
-            حداکثر {{ offer.age_limit }} سال
-        {% else %}
-            مشخص نشده
-        {% endif %}
-    </p>
-
-    <p><strong>جنسیت:</strong> {{ offer.gender|default:"فرقی نمی‌کند" }}</p>
-
-    <p><strong>وضعیت آگهی:</strong> {{ offer.get_status_display }}</p>
-
-    <hr>
-
-    <h3>شاخص‌های کاری / مهارت‌ها</h3>
-    <p>{{ offer.work_indicators|linebreaks }}</p>
-
-    <h3>توضیحات آگهی</h3>
-    <p>{{ offer.job_explanation|linebreaks }}</p>
-
-    <hr>
-
-    <p>
-        <a href="{% url 'joboffers:offer_list' %}">بازگشت به لیست آگهی‌ها</a>
-    </p>
 </body>
 </html>
