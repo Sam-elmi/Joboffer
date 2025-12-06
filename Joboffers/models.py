@@ -1,6 +1,6 @@
 from django.db import models
-from Account.models import PersonalInformation
-
+from Account.models import CustomUser
+from django.conf import settings
 
 class JobPosition(models.Model):
     name = models.CharField(max_length=100)
@@ -31,11 +31,14 @@ class JobOffer(models.Model):
 
     # Linked to the manager who posts the job
     manager = models.ForeignKey(
-        PersonalInformation,
+        settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='job_offers',
         limit_choices_to={'role__name': 'manager'}  # restrict only to manager users
     )
+
+    # فیلد جدید برای وارد کردن اسم شرکت هنگام ثبت آگهی
+    company_name = models.CharField(max_length=200, null=True, blank=True)
 
     job_position = models.ForeignKey(JobPosition, on_delete=models.CASCADE)
     job_category = models.ForeignKey(JobCategory, on_delete=models.SET_NULL, null=True, blank=True)
@@ -57,6 +60,6 @@ class JobOffer(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self):
-        # Automatically shows which company posted this job
-        company = self.manager.company_name if self.manager and self.manager.company_name else "Unknown Company"
+        # نمایش نام شرکت از فیلد جدید، در صورت عدم وجود مقدار، Unknown Company
+        company = self.company_name if self.company_name else "Unknown Company"
         return f"{self.job_position.name} at {company}"
