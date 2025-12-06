@@ -3,47 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <title>لیست رزومه‌ها</title>
+    <style>
+        body { font-family: Tahoma, sans-serif; direction: rtl; padding: 30px; background: #f4f6f8; }
+        h1 { text-align: center; color: #001f3f; margin-bottom: 30px; }
+        table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 8px; overflow: hidden; }
+        th, td { padding: 12px; text-align: center; border-bottom: 1px solid #ddd; }
+        th { background: #001f3f; color: #fff; }
+        tr:hover { background: #f1f1f1; }
+        a { color: #f1c40f; font-weight: bold; text-decoration: none; }
+        a:hover { color: #d4ac0d; }
+    </style>
 </head>
 <body>
-    <h1>لیست کارمندان (Employee) و رزومه‌ها</h1>
+    <h1>لیست رزومه‌ها</h1>
 
     {% if employees %}
-        <table border="1" cellpadding="8">
+        <table>
             <thead>
                 <tr>
                     <th>نام</th>
                     <th>ایمیل</th>
-                    <th>شهر محل زندگی (اگر ثبت شده)</th>
+                    <th>شهر محل زندگی</th>
                     <th>رزومه</th>
                 </tr>
             </thead>
             <tbody>
                 {% for emp in employees %}
-                    <tr>
-                        <td>
-                            {{ emp.first_name|default:"" }} {{ emp.last_name|default:"" }}
-                        </td>
-                        <td>{{ emp.email }}</td>
-                        <td>
-                            {% if emp.basic_info %}
-                                {{ emp.basic_info.living_city }}
-                            {% else %}
-                                -
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="{% url 'resume:resume_detail' emp.pk %}">مشاهده رزومه</a>
-                        </td>
-                    </tr>
+                <tr>
+                    <td>{{ emp.first_name }} {{ emp.last_name }}</td>
+                    <td>{{ emp.email }}</td>
+                    <td>{% if emp.basic_info %}{{ emp.basic_info.living_city }}{% else %}-{% endif %}</td>
+                    <td>
+                        {% if emp.uploaded_resume %}
+                            <a href="{{ emp.uploaded_resume.file.url }}" target="_blank">دانلود رزومه</a>
+                        {% else %}
+                            رزومه موجود نیست
+                        {% endif %}
+                    </td>
+                </tr>
                 {% endfor %}
             </tbody>
         </table>
     {% else %}
-        <p>هیچ کارمندی با نقش employee ثبت نشده است.</p>
+        <p style="text-align:center;">هیچ کارمندی با نقش employee ثبت نشده است.</p>
     {% endif %}
 
-    <p>
-        <a href="{% url 'resume:home' %}">بازگشت به صفحه اصلی رزومه</a>
-    </p>
+    <p style="text-align:center;"><a href="{% url 'resume:resume_home' %}">بازگشت به صفحه اصلی رزومه</a></p>
 </body>
 </html>
