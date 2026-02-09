@@ -1,16 +1,9 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-<meta charset="UTF-8">
-<title>{{ form.instance.pk|yesno:"ویرایش آگهی,ایجاد آگهی جدید" }}</title>
+{% extends 'base.html' %}
+
+{% block title %}{{ form.instance.pk|yesno:"ویرایش آگهی,ایجاد آگهی جدید" }}{% endblock %}
+
+{% block extra_css %}
 <style>
-    body {
-        font-family: Tahoma, sans-serif;
-        background-color: #f4f6f8;
-        margin: 0;
-        padding: 0;
-        direction: rtl;
-    }
     header {
         background-color: #001f3f;
         color: #f1c40f;
@@ -18,8 +11,11 @@
         text-align: center;
         font-size: 24px;
         font-weight: bold;
+        border-radius: 10px;
+        margin-bottom: 20px;
     }
-    .container {
+
+    .form-card {
         width: 90%;
         max-width: 700px;
         margin: 30px auto;
@@ -28,15 +24,18 @@
         border-radius: 12px;
         box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     }
+
     form .field {
         margin-bottom: 15px;
     }
+
     form label {
         display: block;
         font-weight: bold;
         color: #001f3f;
         margin-bottom: 5px;
     }
+
     form input[type=text],
     form input[type=number],
     form select,
@@ -48,10 +47,12 @@
         font-size: 15px;
         box-sizing: border-box;
     }
+
     form textarea {
         resize: vertical;
         min-height: 100px;
     }
+
     .btn-submit {
         display: inline-block;
         width: 100%;
@@ -66,9 +67,11 @@
         transition: background-color 0.3s;
         margin-top: 20px;
     }
+
     .btn-submit:hover {
         background-color: #d4ac0d;
     }
+
     .back-link {
         display: inline-block;
         margin-top: 20px;
@@ -80,27 +83,28 @@
         border: 1px solid #001f3f;
         transition: all 0.3s;
     }
+
     .back-link:hover {
         background-color: #f1c40f;
         color: #001f3f;
         border-color: #f1c40f;
     }
+
     .error {
         color: red;
         font-size: 14px;
         margin-top: 5px;
     }
 </style>
-</head>
-<body>
+{% endblock %}
 
+{% block content %}
 <header>{{ form.instance.pk|yesno:"ویرایش آگهی,ایجاد آگهی جدید" }}</header>
 
-<div class="container">
+<div class="form-card">
     <form method="post">
         {% csrf_token %}
 
-        <!-- فیلد نام شرکت -->
         <div class="field">
             {{ form.company_name.label_tag }}
             {{ form.company_name }}
@@ -109,7 +113,6 @@
             {% endif %}
         </div>
 
-        <!-- سایر فیلدهای فرم -->
         {% for field in form %}
             {% if field.name != 'company_name' %}
             <div class="field">
@@ -127,6 +130,4 @@
 
     <a href="{% url 'joboffers:offer_list' %}" class="back-link">بازگشت به لیست آگهی‌ها</a>
 </div>
-
-</body>
-</html>
+{% endblock %}

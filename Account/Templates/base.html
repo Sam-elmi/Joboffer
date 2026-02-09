@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}JobOffer{% endblock %}</title>
+    <style>
+        :root {
+            --brand-primary: #001f3f;
+            --brand-accent: #f1c40f;
+            --surface: #ffffff;
+            --text: #222;
+            --muted: #666;
+            --shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Tahoma, sans-serif;
+            background-color: #f4f6f8;
+            color: var(--text);
+        }
+
+        a {
+            color: var(--brand-primary);
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page {
+            min-height: calc(100vh - 140px);
+            padding: 24px 16px 40px;
+        }
+
+        .page-title {
+            text-align: center;
+            color: var(--brand-primary);
+            margin: 0 0 24px;
+        }
+
+        .navbar {
+            background-color: var(--brand-primary);
+            color: var(--brand-accent);
+            padding: 14px 0;
+            box-shadow: var(--shadow);
+        }
+
+        .navbar-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .navbar .brand {
+            color: var(--brand-accent);
+            font-weight: bold;
+            text-decoration: none;
+            font-size: 18px;
+        }
+
+        .nav-links,
+        .auth-links {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .navbar a {
+            color: #fef5c4;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .navbar .user-email {
+            color: #fef5c4;
+            font-size: 14px;
+        }
+
+        .messages {
+            list-style: none;
+            padding: 0;
+            margin: 0 0 20px;
+        }
+
+        .message {
+            padding: 12px 14px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            background: #ffffff;
+            box-shadow: var(--shadow);
+        }
+
+        .message.success {
+            border-right: 4px solid #2ecc71;
+        }
+
+        .message.error {
+            border-right: 4px solid #e74c3c;
+        }
+
+        .message.info {
+            border-right: 4px solid #3498db;
+        }
+
+        .footer {
+            background: #0b1b2b;
+            color: #d8d8d8;
+            padding: 18px 0;
+            text-align: center;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    {% block navbar %}{% include 'partials/navbar.html' %}{% endblock %}
+
+    <main class="page">
+        <div class="container">
+            {% include 'partials/messages.html' %}
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    {% include 'partials/footer.html' %}
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

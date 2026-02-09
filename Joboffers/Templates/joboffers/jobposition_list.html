@@ -1,24 +1,21 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <title>لیست عنوان‌های شغلی</title>
-</head>
-<body>
-    <h1>لیست عنوان‌های شغلی (JobPosition)</h1>
+{% extends 'base.html' %}
 
-    {% if positions %}
-        <ul>
-            {% for pos in positions %}
-                <li>{{ pos.name }}</li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p>هیچ عنوان شغلی ثبت نشده است.</p>
-    {% endif %}
+{% block title %}لیست عنوان‌های شغلی{% endblock %}
 
-    <p>
-        <a href="{% url 'joboffers:offer_list' %}">بازگشت به لیست آگهی‌ها</a>
-    </p>
-</body>
-</html>
+{% block content %}
+<h1 class="page-title">لیست عنوان‌های شغلی (JobPosition)</h1>
+
+{% if positions %}
+    <ul>
+        {% for pos in positions %}
+            <li>{{ pos.name }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>هیچ عنوان شغلی ثبت نشده است.</p>
+{% endif %}
+
+<p>
+    <a href="{% url 'joboffers:offer_list' %}">بازگشت به لیست آگهی‌ها</a>
+</p>
+{% endblock %}

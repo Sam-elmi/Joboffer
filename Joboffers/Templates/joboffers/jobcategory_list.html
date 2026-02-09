@@ -1,20 +1,49 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-<meta charset="UTF-8">
-<title>لیست دسته‌بندی‌ها</title>
+{% extends 'base.html' %}
+
+{% block title %}لیست دسته‌بندی‌ها{% endblock %}
+
+{% block extra_css %}
 <style>
-    body { font-family: Tahoma; direction: rtl; background-color: #f4f6f8; padding: 20px; }
-    h1 { color: #001f3f; }
-    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: center; }
-    th { background-color: #001f3f; color: #f1c40f; }
-    a.btn { padding: 5px 12px; background-color: #f1c40f; color: #001f3f; text-decoration: none; border-radius: 5px; }
+    .actions {
+        margin-bottom: 20px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        background: #fff;
+        box-shadow: var(--shadow);
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: center;
+    }
+
+    th {
+        background-color: #001f3f;
+        color: #f1c40f;
+    }
+
+    a.btn {
+        padding: 5px 12px;
+        background-color: #f1c40f;
+        color: #001f3f;
+        text-decoration: none;
+        border-radius: 5px;
+        font-weight: bold;
+    }
 </style>
-</head>
-<body>
-<h1>لیست دسته‌بندی‌ها</h1>
-<a href="{% url 'joboffers:category_add' %}" class="btn">افزودن دسته‌بندی جدید</a>
+{% endblock %}
+
+{% block content %}
+<h1 class="page-title">لیست دسته‌بندی‌ها</h1>
+
+<div class="actions">
+    <a href="{% url 'joboffers:category_add' %}" class="btn">افزودن دسته‌بندی جدید</a>
+</div>
 
 {% if categories %}
 <table>
@@ -31,6 +60,7 @@
 <p>هیچ دسته‌بندی ثبت نشده است.</p>
 {% endif %}
 
-<a href="{% url 'joboffers:offer_list' %}">بازگشت به لیست آگهی‌ها</a>
-</body>
-</html>
+<p>
+    <a href="{% url 'joboffers:offer_list' %}">بازگشت به لیست آگهی‌ها</a>
+</p>
+{% endblock %}

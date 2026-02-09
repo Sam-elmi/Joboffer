@@ -1,93 +1,62 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <title>ویرایش اطلاعات کاربر</title>
-    <style>
-        body {
-            font-family: "Tahoma", sans-serif;
-            background-color: #f4f6f8;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
+{% extends 'base.html' %}
 
-        h1 {
-            background-color: #ffc107; /* تغییر رنگ هدر به طلایی */
-            color: white;
-            padding: 20px 0;
-            margin: 0;
-        }
+{% block title %}ویرایش اطلاعات کاربر{% endblock %}
 
-        .container {
-            margin: 50px auto;
-            width: 80%;
-            max-width: 500px;
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            text-align: right; /* فرم راست‌چین */
-        }
+{% block extra_css %}
+<style>
+    .form-card {
+        margin: 30px auto;
+        width: 100%;
+        max-width: 500px;
+        background-color: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        text-align: right;
+    }
 
-        form {
-            display: flex;
-            flex-direction: column;
-        }
+    form {
+        display: flex;
+        flex-direction: column;
+    }
 
-        form p {
-            margin-bottom: 15px;
-        }
+    form p {
+        margin-bottom: 15px;
+    }
 
-        input, select, textarea {
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            width: 100%;
-            box-sizing: border-box;
-        }
+    input, select, textarea {
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-        button {
-            background-color: #ffc107; /* تغییر رنگ دکمه به طلایی */
-            color: white;
-            padding: 12px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
+    button {
+        background-color: #ffc107;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s;
+    }
 
-        button:hover {
-            background-color: #e0a800;
-        }
+    button:hover {
+        background-color: #e0a800;
+    }
+</style>
+{% endblock %}
 
-        a {
-            display: inline-block;
-            margin-top: 20px;
-            text-decoration: none;
-            color: white;
-            background-color: #007bff;
-            padding: 10px 20px;
-            border-radius: 6px;
-            transition: background-color 0.3s;
-        }
+{% block content %}
+<h1 class="page-title">ویرایش اطلاعات کاربر</h1>
 
-        a:hover {
-            background-color: #0069d9;
-        }
-    </style>
-</head>
-<body>
-    <h1>ویرایش اطلاعات کاربر</h1>
-
-    <div class="container">
-        <form method="post">
-            {% csrf_token %}
-            {{ form.as_p }}
-            <button type="submit">ذخیره تغییرات</button>
-        </form>
-
-    </div>
-</body>
-</html>
+<div class="form-card">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">ذخیره تغییرات</button>
+    </form>
+</div>
+{% endblock %}

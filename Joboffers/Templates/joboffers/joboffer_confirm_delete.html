@@ -1,18 +1,47 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-<meta charset="UTF-8">
-<title>تایید حذف آگهی</title>
-</head>
-<body>
-<h1>حذف آگهی</h1>
-<p>آیا مطمئن هستید می‌خواهید این آگهی را حذف کنید؟</p>
-<p><strong>{{ object.job_position.name }}</strong></p>
+{% extends 'base.html' %}
 
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">بله، حذف کن</button>
-    <a href="{% url 'joboffers:offer_detail' object.pk %}">انصراف</a>
-</form>
-</body>
-</html>
+{% block title %}تایید حذف آگهی{% endblock %}
+
+{% block extra_css %}
+<style>
+    .confirm-card {
+        max-width: 500px;
+        margin: 40px auto;
+        background: #fff;
+        padding: 24px;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+        text-align: center;
+    }
+
+    .confirm-card button {
+        padding: 8px 16px;
+        background-color: #e74c3c;
+        color: #fff;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-left: 10px;
+    }
+
+    .confirm-card a {
+        text-decoration: none;
+        color: var(--brand-primary);
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="confirm-card">
+    <h1>حذف آگهی</h1>
+    <p>آیا مطمئن هستید می‌خواهید این آگهی را حذف کنید؟</p>
+    <p><strong>{{ object.job_position.name }}</strong></p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">بله، حذف کن</button>
+        <a href="{% url 'joboffers:offer_detail' object.pk %}">انصراف</a>
+    </form>
+</div>
+{% endblock %}

@@ -36,10 +36,10 @@ class PersonalInformationForm(forms.ModelForm):
 
         # غیرفعال کردن فیلدها بر اساس role
         if self.instance.role:
-            if self.instance.role.name == 'employee':
+            if self.instance.role.name == 'applicant':
                 self.fields['role'].disabled = True
                 self.fields['company_name'].disabled = True
-            elif self.instance.role.name == 'manager':
+            elif self.instance.role.name == 'employer':
                 self.fields['role'].disabled = True
                 self.fields['first_name'].disabled = True
                 self.fields['last_name'].disabled = True
@@ -48,12 +48,12 @@ class PersonalInformationForm(forms.ModelForm):
         cleaned_data = super().clean()
         role = cleaned_data.get('role')
 
-        if role and role.name == 'employee':
+        if role and role.name == 'applicant':
             if not cleaned_data.get('first_name') or not cleaned_data.get('last_name'):
-                raise forms.ValidationError("برای کارمند، نام و نام خانوادگی باید پر شود.")
-        elif role and role.name == 'manager':
+                raise forms.ValidationError("برای متقاضی، نام و نام خانوادگی باید پر شود.")
+        elif role and role.name == 'employer':
             if not cleaned_data.get('company_name'):
-                raise forms.ValidationError("برای مدیر، نام شرکت باید پر شود.")
+                raise forms.ValidationError("برای کارفرما، نام شرکت باید پر شود.")
 
         return cleaned_data
 

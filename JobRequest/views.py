@@ -1,8 +1,11 @@
+import logging
+
 from django.views.generic import TemplateView, ListView, DetailView , CreateView, UpdateView
 from .models import JobRequest
 from django.urls import reverse_lazy
 from .forms import JobRequestForm, JobRequestUpdateForm
 
+logger = logging.getLogger('jobrequest')
 class JobRequestHomeView(TemplateView):
     template_name = 'jobrequest/home.html'
 
@@ -37,6 +40,10 @@ class JobRequestCreateView(CreateView):
 
     def form_valid(self, form):
         self.object = form.save(employee=self.request.user)
+        logger.info(
+            "JobRequest create view submitted",
+            extra={"job_request_id": self.object.id, "employee_id": self.object.employee_id, "job_offer_id": self.object.job_offer_id},
+        )
         return super().form_valid(form)
 
     def get_success_url(self):
@@ -49,6 +56,14 @@ class JobRequestUpdateView(UpdateView):
     model = JobRequest
     form_class = JobRequestUpdateForm
     template_name = 'jobrequest/jobrequest_form.html'
+
+    def form_valid(self, form):
+        response = super().form_valid(form)
+        logger.info(
+            "JobRequest update view submitted",
+            extra={"job_request_id": self.object.id, "employee_id": self.object.employee_id, "job_offer_id": self.object.job_offer_id},
+        )
+        return response
 
     def get_success_url(self):
         # هدایت به صفحه لیست درخواست‌ها بعد از ویرایش

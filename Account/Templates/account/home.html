@@ -1,14 +1,11 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <title>حساب کاربری</title>
-</head>
-<body>
-    <h1>بخش حساب کاربری (Account)</h1>
+{% extends 'base.html' %}
 
-    <p>
-        <a href="{% url 'account:user_list' %}">مشاهده لیست کاربران ثبت‌شده</a>
-    </p>
-</body>
-</html>
+{% block title %}حساب کاربری{% endblock %}
+
+{% block content %}
+<h1 class="page-title">بخش حساب کاربری (Account)</h1>
+
+<p>
+    <a href="{% url 'account:user_list' %}">مشاهده لیست کاربران ثبت‌شده</a>
+</p>
+{% endblock %}

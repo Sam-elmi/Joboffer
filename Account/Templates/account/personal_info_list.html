@@ -1,51 +1,72 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <title>لیست کاربران</title>
-</head>
-<body>
-    <h1>لیست کاربران (PersonalInformation)</h1>
+{% extends 'base.html' %}
 
-    {% if users %}
-        <table border="1" cellpadding="8">
-            <thead>
+{% block title %}لیست کاربران{% endblock %}
+
+{% block extra_css %}
+<style>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: #fff;
+        box-shadow: var(--shadow);
+    }
+
+    th, td {
+        border: 1px solid #ddd;
+        padding: 10px 12px;
+        text-align: center;
+    }
+
+    th {
+        background-color: var(--brand-primary);
+        color: var(--brand-accent);
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 class="page-title">لیست کاربران (PersonalInformation)</h1>
+
+{% if users %}
+    <table>
+        <thead>
+            <tr>
+                <th>ایمیل</th>
+                <th>نقش (Role)</th>
+                <th>سطح ثبت‌نام</th>
+                <th>نوع کاربر</th>
+                <th>جزییات</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for u in users %}
                 <tr>
-                    <th>ایمیل</th>
-                    <th>نقش (Role)</th>
-                    <th>سطح ثبت‌نام</th>
-                    <th>نوع کاربر</th>
-                    <th>جزییات</th>
+                    <td>{{ u.email }}</td>
+                    <td>{{ u.role }}</td>
+                    <td>{{ u.register_level|default:"-" }}</td>
+                    <td>
+                        {% if u.role.name == "applicant" %}
+                            متقاضی ({{ u.first_name }} {{ u.last_name }})
+                        {% elif u.role.name == "employer" %}
+                            کارفرما {{ u.company_name }}
+                        {% elif u.role.name == "admin" %}
+                            مدیر سامانه
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'account:user_detail' u.pk %}">مشاهده جزییات</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                {% for u in users %}
-                    <tr>
-                        <td>{{ u.email }}</td>
-                        <td>{{ u.role }}</td>
-                        <td>{{ u.register_level|default:"-" }}</td>
-                        <td>
-                            {% if u.role.name == "employee" %}
-                                کارمند ({{ u.first_name }} {{ u.last_name }})
-                            {% elif u.role.name == "manager" %}
-                                مدیر شرکت {{ u.company_name }}
-                            {% else %}
-                                -
-                            {% endif %}
-                        </td>
-                        <td>
-                            <a href="{% url 'account:user_detail' u.pk %}">مشاهده جزییات</a>
-                        </td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    {% else %}
-        <p>هنوز هیچ کاربری ثبت نشده است.</p>
-    {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% else %}
+    <p>هنوز هیچ کاربری ثبت نشده است.</p>
+{% endif %}
 
-    <p>
-        <a href="{% url 'account:home' %}">بازگشت به صفحه‌ی Account</a>
-    </p>
-</body>
-</html>
+<p>
+    <a href="{% url 'account:home' %}">بازگشت به صفحه‌ی Account</a>
+</p>
+{% endblock %}

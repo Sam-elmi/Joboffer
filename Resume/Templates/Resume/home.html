@@ -1,19 +1,30 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <title>صفحه رزومه</title>
-    <style>
-        body { font-family: Tahoma, sans-serif; direction: rtl; padding: 30px; background: #f4f6f8; }
-        h1 { text-align: center; color: #001f3f; margin-bottom: 40px; }
-        .btn { display: block; width: 200px; margin: 20px auto; padding: 12px; text-align: center;
-               background: #f1c40f; color: #001f3f; text-decoration: none; border-radius: 8px; font-weight: bold;}
-        .btn:hover { background: #d4ac0d; }
-    </style>
-</head>
-<body>
-    <h1>صفحه رزومه</h1>
-    <a href="{% url 'resume:resume_add' %}" class="btn">ثبت رزومه جدید</a>
-    <a href="{% url 'resume:resume_list' %}" class="btn">لیست رزومه‌ها</a>
-</body>
-</html>
+{% extends 'base.html' %}
+
+{% block title %}صفحه رزومه{% endblock %}
+
+{% block extra_css %}
+<style>
+    .btn {
+        display: block;
+        width: 200px;
+        margin: 20px auto;
+        padding: 12px;
+        text-align: center;
+        background: #f1c40f;
+        color: #001f3f;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+    }
+
+    .btn:hover {
+        background: #d4ac0d;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 class="page-title">صفحه رزومه</h1>
+<a href="{% url 'resume:resume_add' %}" class="btn">ثبت رزومه جدید</a>
+<a href="{% url 'resume:resume_list' %}" class="btn">لیست رزومه‌ها</a>
+{% endblock %}

@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+
+{% block title %}ورود کاربران{% endblock %}
+
+{% block extra_css %}
+<style>
+    body {
+        background-color: #f9f9f9;
+    }
+
+    .login-container {
+        background-color: #fff;
+        padding: 30px 40px;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        width: 350px;
+        margin: 40px auto 0;
+    }
+
+    h1 {
+        text-align: center;
+        color: #2c3e50;
+        margin-bottom: 25px;
+    }
+
+    label {
+        display: block;
+        margin-top: 15px;
+        font-weight: bold;
+    }
+
+    input {
+        width: 100%;
+        padding: 8px 10px;
+        margin-top: 5px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        width: 100%;
+        margin-top: 20px;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #3498db;
+        color: #fff;
+        font-size: 1em;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #1c5980;
+    }
+
+    .errorlist {
+        color: #e74c3c;
+        margin-top: 5px;
+        list-style: none;
+        padding: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <h1>ورود کاربران</h1>
+    <form method="post">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+            <ul class="errorlist">
+                {% for error in form.non_field_errors %}
+                    <li>{{ error }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+
+        <label for="{{ form.username.id_for_label }}">ایمیل</label>
+        {{ form.username }}
+        {{ form.username.errors }}
+
+        <label for="{{ form.password.id_for_label }}">رمز عبور</label>
+        {{ form.password }}
+        {{ form.password.errors }}
+
+        <button type="submit">ورود</button>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}نتیجه فعال‌سازی{% endblock %}
+
+{% block content %}
+<h1 class="page-title">نتیجه فعال‌سازی</h1>
+
+{% if activation_status == 'activated' %}
+    <p>حساب شما فعال شد. اکنون می‌توانید وارد شوید.</p>
+{% elif activation_status == 'already_active' %}
+    <p>حساب شما قبلا فعال شده است. می‌توانید وارد شوید.</p>
+{% else %}
+    <p>لینک فعال‌سازی معتبر نیست یا منقضی شده است.</p>
+{% endif %}
+
+<p>
+    <a href="{% url 'account:login' %}">رفتن به صفحه ورود</a>
+</p>
+{% endblock %}

@@ -8,14 +8,14 @@ class JobOfferForm(forms.ModelForm):
     job_position_name = forms.CharField(
         label="عنوان شغل",
         required=True,
-        widget=forms.TextInput(attrs={'placeholder': 'مثال: برنامه‌نویس Python'})
+        widget=forms.TextInput(attrs={'placeholder': 'عنوان شغلی را وارد کنید'})
     )
 
     # فیلد نام شرکت برای ثبت در هنگام ثبت آگهی
     company_name = forms.CharField(
         label="نام شرکت",
         required=True,
-        widget=forms.TextInput(attrs={'placeholder': 'مثال: شرکت من'})
+        widget=forms.TextInput(attrs={'placeholder': 'نام شرکت خود را وارد کنید'})
     )
 
     class Meta:

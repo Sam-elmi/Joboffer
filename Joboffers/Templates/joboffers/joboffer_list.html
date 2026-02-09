@@ -1,37 +1,25 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-<meta charset="UTF-8">
-<title>لیست آگهی‌ها</title>
-<style>
-    body {
-        font-family: Tahoma, sans-serif;
-        background-color: #f4f6f8;
-        margin: 0;
-        padding: 0;
-        direction: rtl;
-    }
+{% extends 'base.html' %}
 
+{% block title %}لیست آگهی‌ها{% endblock %}
+
+{% block extra_css %}
+<style>
     header {
-        background-color: #001f3f; /* آبی کاربنی */
-        color: #f1c40f; /* زرد */
+        background-color: #001f3f;
+        color: #f1c40f;
         padding: 20px;
         text-align: center;
         font-size: 24px;
         font-weight: bold;
-    }
-
-    .container {
-        width: 90%;
-        max-width: 1200px;
-        margin: 30px auto;
+        border-radius: 10px;
+        margin-bottom: 20px;
     }
 
     .btn {
         display: inline-block;
         padding: 10px 20px;
-        background-color: #f1c40f; /* زرد */
-        color: #001f3f; /* آبی کاربنی */
+        background-color: #f1c40f;
+        color: #001f3f;
         text-decoration: none;
         border-radius: 6px;
         font-weight: bold;
@@ -57,8 +45,8 @@
     }
 
     table th {
-        background-color: #001f3f; /* آبی کاربنی */
-        color: #f1c40f; /* زرد */
+        background-color: #001f3f;
+        color: #f1c40f;
     }
 
     table tr:nth-child(even) {
@@ -106,9 +94,9 @@
         color: #f1c40f;
     }
 </style>
-</head>
-<body>
+{% endblock %}
 
+{% block content %}
 <header>لیست آگهی‌های شغلی</header>
 
 <div class="container">
@@ -128,8 +116,7 @@
             {% for offer in offers %}
             <tr>
                 <td>{{ offer.job_position.name }}</td>
-                <<td>{{ offer.company_name|default:"(نامشخص)" }}</td>
-
+                <td>{{ offer.company_name|default:"(نامشخص)" }}</td>
                 <td>{{ offer.job_category.name|default:"-" }}</td>
                 <td><a href="{% url 'joboffers:offer_detail' offer.pk %}" class="view-btn">مشاهده</a></td>
             </tr>
@@ -141,10 +128,7 @@
     {% endif %}
 
     <div class="links">
-
         <a href="{% url 'joboffers:category_list' %}">مشاهده لیست دسته‌بندی‌ها</a>
     </div>
 </div>
-
-</body>
-</html>
+{% endblock %}

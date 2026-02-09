@@ -1,0 +1,19 @@
+<nav class="navbar">
+    <div class="navbar-inner container">
+        <a class="brand" href="{% url 'account:home' %}">JobOffer</a>
+        <div class="nav-links">
+            <a href="{% url 'joboffers:offer_list' %}">آگهی‌ها</a>
+            <a href="{% url 'jobrequest:request_list' %}">درخواست‌ها</a>
+            <a href="{% url 'resume:resume_list' %}">رزومه‌ها</a>
+        </div>
+        <div class="auth-links">
+            {% if user.is_authenticated %}
+                <span class="user-email">{{ user.email }}</span>
+                <a href="{% url 'account:user_detail' user.pk %}">پروفایل</a>
+                <a href="{% url 'account:logout' %}">خروج</a>
+            {% else %}
+                <a href="{% url 'account:login' %}">ورود</a>
+            {% endif %}
+        </div>
+    </div>
+</nav>

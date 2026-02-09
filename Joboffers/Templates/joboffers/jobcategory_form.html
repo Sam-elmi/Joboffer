@@ -1,26 +1,55 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-<meta charset="UTF-8">
-<title>افزودن دسته‌بندی</title>
+{% extends 'base.html' %}
+
+{% block title %}افزودن دسته‌بندی{% endblock %}
+
+{% block extra_css %}
 <style>
-    body { font-family: Tahoma; direction: rtl; background-color: #f4f6f8; padding: 20px; }
-    h1 { color: #001f3f; }
-    input[type=text] { width: 100%; padding: 10px; margin-top: 6px; margin-bottom: 12px; border: 1px solid #ccc; border-radius: 5px; }
-    button { padding: 10px 20px; background-color: #f1c40f; color: #001f3f; border: none; border-radius: 5px; cursor: pointer; }
-    button:hover { background-color: #d4ac0d; }
+    .form-card {
+        max-width: 500px;
+        margin: 30px auto;
+        background: #fff;
+        padding: 24px;
+        border-radius: 10px;
+        box-shadow: var(--shadow);
+    }
+
+    input[type=text] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 6px;
+        margin-bottom: 12px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #f1c40f;
+        color: #001f3f;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #d4ac0d;
+    }
 </style>
-</head>
-<body>
-<h1>افزودن دسته‌بندی جدید</h1>
+{% endblock %}
 
-<form method="post">
-    {% csrf_token %}
-    {{ form.name.label_tag }}<br>
-    {{ form.name }}<br>
-    <button type="submit">ذخیره</button>
-</form>
+{% block content %}
+<h1 class="page-title">افزودن دسته‌بندی جدید</h1>
 
-<a href="{% url 'joboffers:category_list' %}">بازگشت به لیست دسته‌بندی‌ها</a>
-</body>
-</html>
+<div class="form-card">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.name.label_tag }}<br>
+        {{ form.name }}<br>
+        <button type="submit">ذخیره</button>
+    </form>
+</div>
+
+<p>
+    <a href="{% url 'joboffers:category_list' %}">بازگشت به لیست دسته‌بندی‌ها</a>
+</p>
+{% endblock %}

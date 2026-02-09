@@ -3,6 +3,16 @@ from Account.models import CustomUser
 from joboffers.models import JobOffer, JobPosition
 from django.conf import settings
 
+class JobRequestManager(models.Manager):
+    def pending(self):
+        return self.filter(status='checking')
+
+    def accepted(self):
+        return self.filter(status='accepted')
+
+    def rejected(self):
+        return self.filter(status='rejected')
+
 class JobRequest(models.Model):
     STATUS_CHOICES = [
         ('checking', 'Checking'),
@@ -20,7 +30,7 @@ class JobRequest(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='job_requests',
-        limit_choices_to={'role__name': 'employee'}
+        limit_choices_to={'role__name': 'applicant'}
     )
 
     job_offer = models.ForeignKey(
@@ -47,6 +57,8 @@ class JobRequest(models.Model):
     request_check = models.CharField(max_length=20, choices=REQUEST_CHECK_CHOICES, default='not_checked')
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    objects = JobRequestManager()
 
     def __str__(self):
         return f"Request by {self.employee_first_name} {self.employee_last_name} for {self.job_position}"

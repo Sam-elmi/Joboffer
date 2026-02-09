@@ -1,26 +1,25 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <title>جزییات کاربر</title>
-</head>
-<body>
-    <h1>جزییات کاربر</h1>
+{% extends 'base.html' %}
 
-    <p><strong>ایمیل:</strong> {{ user.email }}</p>
-    <p><strong>شماره موبایل:</strong> {{ user.phone_number }}</p>
-    <p><strong>نقش:</strong> {{ user.role }}</p>
-    <p><strong>سطح ثبت‌نام:</strong> {{ user.register_level|default:"-" }}</p>
+{% block title %}جزییات کاربر{% endblock %}
 
-    {% if user.role.name == "employee" %}
-        <p><strong>نام:</strong> {{ user.first_name }}</p>
-        <p><strong>نام خانوادگی:</strong> {{ user.last_name }}</p>
-    {% elif user.role.name == "manager" %}
-        <p><strong>نام شرکت:</strong> {{ user.company_name }}</p>
-    {% endif %}
+{% block content %}
+<h1 class="page-title">جزییات کاربر</h1>
 
-    <p>
-        <a href="{% url 'account:user_list' %}">بازگشت به لیست کاربران</a>
-    </p>
-</body>
-</html>
+<p><strong>ایمیل:</strong> {{ user.email }}</p>
+<p><strong>شماره موبایل:</strong> {{ user.phone_number }}</p>
+<p><strong>نقش:</strong> {{ user.role }}</p>
+<p><strong>سطح ثبت‌نام:</strong> {{ user.register_level|default:"-" }}</p>
+
+{% if user.role.name == "applicant" %}
+    <p><strong>نام:</strong> {{ user.first_name }}</p>
+    <p><strong>نام خانوادگی:</strong> {{ user.last_name }}</p>
+{% elif user.role.name == "employer" %}
+    <p><strong>نام شرکت:</strong> {{ user.company_name }}</p>
+{% elif user.role.name == "admin" %}
+    <p><strong>سطح دسترسی:</strong> مدیر سامانه</p>
+{% endif %}
+
+<p>
+    <a href="{% url 'account:user_list' %}">بازگشت به لیست کاربران</a>
+</p>
+{% endblock %}

@@ -1,34 +1,67 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-    <meta charset="UTF-8">
-    <title>ثبت رزومه</title>
-    <style>
-        body { font-family: Tahoma, sans-serif; direction: rtl; background: #f4f6f8; padding: 30px; }
-        h2 { text-align: center; color: #001f3f; margin-bottom: 20px; }
-        form { max-width: 700px; margin: auto; background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.1); }
-        h3 { color: #001f3f; margin-top: 20px; margin-bottom: 10px; }
-        input, select, textarea { width: 100%; padding: 10px; margin-bottom: 15px; border-radius: 6px; border: 1px solid #ccc; }
-        button { padding: 12px 20px; background: #f1c40f; color: #001f3f; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; }
-        button:hover { background: #d4ac0d; }
-        p a { color: #001f3f; text-decoration: underline; }
-    </style>
-</head>
-<body>
-    <h2>ثبت رزومه</h2>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <h3>اطلاعات پایه</h3>
-        {{ basic_form.as_p }}
-        <h3>آپلود رزومه</h3>
-        {{ resume_form.as_p }}
-        <button type="submit">ثبت</button>
-    </form>
+{% extends 'base.html' %}
 
-    {% if resume_form.instance and resume_form.instance.file %}
-        <p>رزومه فعلی: <a href="{{ resume_form.instance.file.url }}" target="_blank">دانلود</a></p>
-    {% endif %}
+{% block title %}ثبت رزومه{% endblock %}
 
-    <p><a href="{% url 'resume:resume_list' %}">بازگشت به لیست رزومه‌ها</a></p>
-</body>
-</html>
+{% block extra_css %}
+<style>
+    form {
+        max-width: 700px;
+        margin: auto;
+        background: #fff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+    }
+
+    h3 {
+        color: #001f3f;
+        margin-top: 20px;
+        margin-bottom: 10px;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        padding: 12px 20px;
+        background: #f1c40f;
+        color: #001f3f;
+        border: none;
+        border-radius: 8px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background: #d4ac0d;
+    }
+
+    p a {
+        color: #001f3f;
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<h1 class="page-title">ثبت رزومه</h1>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <h3>اطلاعات پایه</h3>
+    {{ basic_form.as_p }}
+    <h3>آپلود رزومه</h3>
+    {{ resume_form.as_p }}
+    <button type="submit">ثبت</button>
+</form>
+
+{% if resume_form.instance and resume_form.instance.file %}
+    <p>رزومه فعلی: <a href="{{ resume_form.instance.file.url }}" target="_blank">دانلود</a></p>
+{% endif %}
+
+<p><a href="{% url 'resume:resume_list' %}">بازگشت به لیست رزومه‌ها</a></p>
+{% endblock %}

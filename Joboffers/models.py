@@ -2,6 +2,16 @@ from django.db import models
 from Account.models import CustomUser
 from django.conf import settings
 
+class JobOfferManager(models.Manager):
+    def active(self):
+        return self.filter(status='available')
+
+    def expired(self):
+        return self.filter(status='expired')
+
+    def by_employer(self, user):
+        return self.filter(manager=user)
+
 class JobPosition(models.Model):
     name = models.CharField(max_length=100)
 
@@ -34,7 +44,7 @@ class JobOffer(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
         related_name='job_offers',
-        limit_choices_to={'role__name': 'manager'}  # restrict only to manager users
+        limit_choices_to={'role__name': 'employer'}  # restrict only to employer users
     )
 
     # فیلد جدید برای وارد کردن اسم شرکت هنگام ثبت آگهی
@@ -58,6 +68,8 @@ class JobOffer(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    objects = JobOfferManager()
 
     def __str__(self):
         # نمایش نام شرکت از فیلد جدید، در صورت عدم وجود مقدار، Unknown Company

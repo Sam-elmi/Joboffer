@@ -1,28 +1,21 @@
-<!DOCTYPE html>
-<html lang="fa">
-<head>
-<meta charset="UTF-8">
-<title>جزئیات آگهی</title>
-<style>
-    body {
-        font-family: Tahoma, sans-serif;
-        background-color: #f4f6f8;
-        margin: 0;
-        padding: 0;
-        direction: rtl;
-    }
+{% extends 'base.html' %}
 
+{% block title %}جزئیات آگهی{% endblock %}
+
+{% block extra_css %}
+<style>
     header {
-        background-color: #001f3f; /* آبی کاربنی */
-        color: #f1c40f; /* زرد */
+        background-color: #001f3f;
+        color: #f1c40f;
         padding: 20px;
         text-align: center;
         font-size: 24px;
         font-weight: bold;
+        border-radius: 10px;
+        margin-bottom: 20px;
     }
 
-    .container {
-        width: 90%;
+    .details-card {
         max-width: 700px;
         margin: 30px auto;
         background-color: #fff;
@@ -94,13 +87,12 @@
         margin-top: 25px;
     }
 </style>
-</head>
-<body>
+{% endblock %}
 
+{% block content %}
 <header>{{ offer.job_position.name }}</header>
 
-<div class="container">
-
+<div class="details-card">
     <div class="field">
         <label>شرکت:</label>
         <span>{{ offer.manager.company_name|default:"نامشخص" }}</span>
@@ -155,8 +147,7 @@
         <a href="{% url 'joboffers:offer_list' %}" class="back-link">بازگشت به لیست آگهی‌ها</a>
 
         {% if user.is_authenticated and user == offer.manager %}
-            <a href="{% url 'joboffers:offer_edit' offer.pk %}" class="btn btn-warning">ویرایش</a>
-
+            <a href="{% url 'joboffers:offer_edit' offer.pk %}" class="edit-btn">ویرایش</a>
 
             <form action="{% url 'joboffers:offer_delete' offer.pk %}" method="post" style="display:inline;">
                 {% csrf_token %}
@@ -166,8 +157,5 @@
             </form>
         {% endif %}
     </div>
-
 </div>
-
-</body>
-</html>
+{% endblock %}
